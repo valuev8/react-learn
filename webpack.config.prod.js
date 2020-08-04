@@ -1,19 +1,11 @@
-const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
+const {merge} = require('webpack-merge');
+const commonConfig = require('./webpack.config.common');
 
-module.exports = {
+module.exports = merge(commonConfig, {
     mode: 'production',
-    entry: {
-        app: ['./src/app.tsx'],
-        vendor: ['react', 'react-dom']
-    },
-    output: {
-        path: path.resolve(__dirname, 'build'),
-        filename: 'js/[name].bundle.js'
-    },
     optimization: {
         minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
     },
@@ -22,23 +14,6 @@ module.exports = {
     },
     module: {
         rules: [
-            {
-                test: /\.js$/,
-                use: ['babel-loader', 'source-map-loader'],
-                exclude: /node_modules/,
-            },
-            {
-                test: /\.tsx?$/,
-                use: ['babel-loader', 'awesome-typescript-loader'],
-            },
-            {
-                test: /\.scss$/,
-                use: [
-                    { loader: MiniCssExtractPlugin.loader },
-                    'css-loader',
-                    'sass-loader'
-                ],
-            },
             {
                 test: /\.(gif|png|jpe?g|svg)$/i,
                 use: [
@@ -79,9 +54,5 @@ module.exports = {
             filename: "./index.html",
             minify: { collapseWhitespace: true }
         }),
-        new MiniCssExtractPlugin({
-            filename: '[name].css',
-            chunkFilename: '[name].css'
-        })
     ]
-};
+});
