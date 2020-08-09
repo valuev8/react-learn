@@ -18,10 +18,6 @@ module.exports = merge(commonConfig, {
                 test: /\.(gif|png|jpe?g|svg)$/i,
                 use: [
                     {
-                        loader: 'file-loader',
-                        options: { name: 'img/[name].[ext]' }
-                    },
-                    {
                         loader: 'image-webpack-loader',
                         options: {
                             mozjpeg: {
