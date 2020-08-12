@@ -3,6 +3,7 @@ import reset from 'styled-reset'
 import { createGlobalStyle } from 'styled-components';
 import { variables } from '@styles/variables.styles';
 import { Homepage } from './features/homepage/Homepage';
+import { ErrorBoundary } from './shared/error-handlers/errorBoundary/errorBoundary';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -20,8 +21,10 @@ const GlobalStyle = createGlobalStyle`
 export const Main = () => {
   return (
     <React.Fragment>
-      <GlobalStyle />
-      <Homepage />
+      <ErrorBoundary>
+        <GlobalStyle />
+        <Homepage />
+      </ErrorBoundary>
     </React.Fragment>
   )
 }
