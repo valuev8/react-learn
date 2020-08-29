@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import { variables } from '@styles/variables.styles';
-import { SelectOption } from '../../shared/models/select-option.type';
+import { SelectOption } from '../../models/select-option.type';
 
 type ReactSelectProps = {
   options: SelectOption[];

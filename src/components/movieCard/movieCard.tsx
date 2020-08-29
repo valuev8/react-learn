@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { variables } from '@styles/variables.styles';
 import { dataFormatter } from '../../shared/helpers/data-formatter';
-import DotsButton from '../dotsButton/dotsButton';
+import DotsButton from '../../shared/components/dotsButton/dotsButton';
 
 type MovieCardProps = {
   movie: Movie;

@@ -16,6 +16,10 @@ const GlobalStyle = createGlobalStyle`
     color: ${variables.colorPrimary};
     font-family: ${variables.fontPrimary};
   }
+  
+  * {
+    box-sizing: border-box;
+  }
 `
 
 export const Main = () => {

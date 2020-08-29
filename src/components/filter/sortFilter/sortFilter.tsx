@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { variables } from '@styles/variables.styles';
-import ReactSelect from '../../select/reactSelect';
+import ReactSelect from '../../../shared/components/select/reactSelect';
 import { SelectOption } from '../../../shared/models/select-option.type';
 
 type SortFilterProps = {

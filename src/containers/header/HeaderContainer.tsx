@@ -1,9 +1,10 @@
 import React from 'react';
-import Logo from '../../components/logo/Logo';
+import Logo from '../../shared/components/logo/Logo';
 import styled from 'styled-components';
-import Button from '../../components/button/Button';
 import { variables } from '@styles/variables.styles';
-import SearchBar from '../../components/searchBar/searchBar';
+import SearchBar from '../../shared/components/searchBar/searchBar';
+import ModalLauncher from '../../shared/components/modal/ModalLauncher';
+import CreateMovieModal from '../../components/modals/createMovieModal';
 
 const StyledHeaderWrapper = styled.div`
   padding: 20px;
@@ -48,7 +49,9 @@ const HeaderContainer = () => (
     <StyledHeaderWrapper>
       <StyledTopSection>
         <Logo />
-        <Button width='150'> + Add Movie</Button>
+        <ModalLauncher label='+ Add Movie' width='150' modalHeader='Create Movie'>
+          <CreateMovieModal />
+        </ModalLauncher>
       </StyledTopSection>
       <StyledBottomSection>
         <SearchBar/>

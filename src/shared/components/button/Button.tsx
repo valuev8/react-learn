@@ -7,6 +7,7 @@ type ButtonProps = {
   theme?: string;
   width?: string | number,
   height?: string | number,
+  onClick?: () => void,
 }
 
 const StyledButton = styled.button<ButtonProps>`
@@ -96,8 +97,8 @@ const getButtonColor = (theme: string) => {
    }`
 }
 
-const Button: FC<ButtonProps> = ({ theme, width, height, children}): ReactElement => (
-  <StyledButton theme={theme} width={width} height={height}> { children } </StyledButton>
+const Button: FC<ButtonProps> = ({ theme, width, height, children, onClick}): ReactElement => (
+  <StyledButton theme={theme} width={width} height={height} onClick={onClick}> { children } </StyledButton>
 );
 
 export default Button;
