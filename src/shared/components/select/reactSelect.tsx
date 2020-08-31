@@ -8,6 +8,7 @@ type ReactSelectProps = {
   options: SelectOption[];
   defaultValue?: SelectOption;
   placeholder?: string;
+  onChange: (e: SelectOption) => void,
 }
 
 const StyledReactSelect = styled(Select)`
@@ -71,10 +72,11 @@ const StyledReactSelect = styled(Select)`
   }
 `;
 
-const ReactSelect = ({ options, placeholder, defaultValue }: ReactSelectProps) => (
+const ReactSelect = ({ options, placeholder, defaultValue, onChange }: ReactSelectProps) => (
   <StyledReactSelect options={ options }
                      defaultValue={ defaultValue || options[0] }
                      placeholder={ placeholder }
+                     onChange={onChange}
                      classNamePrefix="react-select"/>
 );
 

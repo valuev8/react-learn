@@ -1,23 +1,33 @@
 import React from 'react';
-import { Movies } from '../../data/movies';
 import MovieCard from '../../components/movieCard/movieCard';
 import styled from 'styled-components';
-
-const movies = Movies;
+import { Movie } from '../../shared/models/movie.type';
 
 const StyledMovieList = styled.div`
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: 
+   minmax(250px, auto)
+   minmax(250px, auto)
+   minmax(250px, auto)
+   minmax(250px, auto);
   grid-gap: 30px;
   padding: 30px;
+  flex-grow: 1;
   & > div {
     width: 100%;
   }
 `
 
-const MovieList = () => (
+type MovieListProps = {
+  movies: Movie[];
+}
+
+const MovieList = ({ movies }: MovieListProps ) => (
   <StyledMovieList>
-    { movies.map((movie) => <MovieCard movie={movie} key={movie.id} />) }
+    { movies.length
+      ? movies.map((movie) => <MovieCard movie={movie} key={movie.id} />)
+      : 'Movies not found'
+    }
   </StyledMovieList>
 );
 

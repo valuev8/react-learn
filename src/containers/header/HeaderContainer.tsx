@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { variables } from '@styles/variables.styles';
 import SearchBar from '../../shared/components/searchBar/searchBar';
 import ModalLauncher from '../../shared/components/modal/ModalLauncher';
-import CreateMovieModal from '../../components/modals/createMovieModal';
+import CreateEditMovieModal from '../../components/modals/CreateEditMovieModal';
 
 const StyledHeaderWrapper = styled.div`
   padding: 20px;
@@ -50,7 +50,7 @@ const HeaderContainer = () => (
       <StyledTopSection>
         <Logo />
         <ModalLauncher label='+ Add Movie' width='150' modalHeader='Create Movie'>
-          <CreateMovieModal />
+          <CreateEditMovieModal />
         </ModalLauncher>
       </StyledTopSection>
       <StyledBottomSection>

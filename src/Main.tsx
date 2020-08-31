@@ -11,10 +11,22 @@ const GlobalStyle = createGlobalStyle`
      font-family: 'Northstar';
      src: url('assets/fonts/NorthstarGradient-BKB3.otf');
   }
+  
   body {
     background: ${variables.colorBackground};
     color: ${variables.colorPrimary};
     font-family: ${variables.fontPrimary};
+    height: 100%;
+  }
+  
+  html {
+    height: 100%;
+  }
+  
+  #app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
   
   * {

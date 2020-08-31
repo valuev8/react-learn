@@ -1,27 +1,24 @@
-import React, { FC } from 'react';
+import React, { Component, SyntheticEvent } from 'react';
 import styled from 'styled-components';
 import { variables } from '@styles/variables.styles';
 import { dataFormatter } from '../../shared/helpers/data-formatter';
 import DotsButton from '../../shared/components/dotsButton/dotsButton';
+import { Popover } from '@material-ui/core';
+import ModalLauncher from '../../shared/components/modal/ModalLauncher';
+import CreateEditMovieModal from '../modals/CreateEditMovieModal';
+import { Movie } from '../../shared/models/movie.type';
 
 type MovieCardProps = {
   movie: Movie;
 }
 
-type Movie = {
-  id: number,
-  title: string,
-  tagline: string,
-  vote_average: number,
-  vote_count: number,
-  release_date: string,
-  poster_path: string,
-  overview: string,
-  budget: number,
-  revenue: number,
-  genres: string[],
-  runtime: number
-}
+const StyledPopover = styled(Popover)`
+  .MuiPaper-root {
+    display: flex;
+    flex-direction: column;
+    background: ${variables.colorBackground};
+  }
+`
 
 const StyledMovieCard = styled.div`
   width: 300px;
@@ -78,24 +75,61 @@ const StyledMovieCard = styled.div`
     }
   }
 `
-const MovieCard: FC<MovieCardProps> = ({ movie }) => (
-  <StyledMovieCard>
-    <div className="card-image">
-      <img src={ movie.poster_path } alt="Movie Poster"/>
-      <DotsButton />
-    </div>
-    <div className="card-info">
-      <h2 className="card-info__title">
-        { movie.title }
-      </h2>
-      <span className="card-info__year">
-        { dataFormatter(movie.release_date) }
+class MovieCard extends Component<MovieCardProps, { popoverAnchor: Element | null, open: boolean }> {
+
+  constructor(props: MovieCardProps) {
+    super(props);
+    this.state = {
+      popoverAnchor: null,
+      open: false,
+    };
+  }
+
+  handleClick = (event: SyntheticEvent) => {
+    this.setState({ popoverAnchor: event.currentTarget, open: !this.state.open})
+  };
+
+  handleClose = () => {
+    this.setState({ open: false})
+  };
+
+  popoverAnchor = () => this.state.popoverAnchor;
+
+  isOpen = () => this.state.open;
+
+  render() {
+    return (
+      <StyledMovieCard>
+        <div className="card-image">
+          <img src={ this.props.movie.poster_path } alt="Movie Poster"/>
+          <DotsButton onClick={this.handleClick}/>
+          <StyledPopover
+            open={this.isOpen()}
+            anchorEl={this.popoverAnchor}
+            onClose={this.handleClose}
+          >
+            <ModalLauncher width='150' label='Edit' modalHeader='Edit Movie'>
+              <CreateEditMovieModal data={this.props.movie} type='edit' />
+            </ModalLauncher>
+            <ModalLauncher width='150' label='Delete' modalHeader='Delete Movie'>
+              Are you sure you want to delete this movie?
+            </ModalLauncher>
+          </StyledPopover>
+        </div>
+        <div className="card-info">
+          <h2 className="card-info__title">
+            { this.props.movie.title }
+          </h2>
+          <span className="card-info__year">
+        { dataFormatter(this.props.movie.release_date) }
       </span>
-    </div>
-    <div className="genres">
-      { movie.genres.join(', ') }
-    </div>
-  </StyledMovieCard>
-);
+        </div>
+        <div className="genres">
+          { this.props.movie.genres.join(', ') }
+        </div>
+      </StyledMovieCard>
+    )
+  }
+}
 
 export default MovieCard;

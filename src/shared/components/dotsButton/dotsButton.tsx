@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import styled from 'styled-components';
 import { variables } from '@styles/variables.styles';
 
@@ -42,8 +42,13 @@ const StyledDotsButton = styled.button`
     }
   }
 `
-const DotsButton = () => (
-  <StyledDotsButton className="dots-btn">
+
+type DotsButtonProps = {
+  onClick: (e: SyntheticEvent) => void;
+};
+
+const DotsButton = ({ onClick }: DotsButtonProps) => (
+  <StyledDotsButton className="dots-btn" onClick={onClick}>
     <span aria-label="dot" />
   </StyledDotsButton>
 );

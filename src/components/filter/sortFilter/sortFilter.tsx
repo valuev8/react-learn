@@ -6,6 +6,7 @@ import { SelectOption } from '../../../shared/models/select-option.type';
 
 type SortFilterProps = {
   options: SelectOption[];
+  onSort: (e: SelectOption) => void,
 }
 
 const StyledSortFilter = styled.div`
@@ -18,11 +19,12 @@ const StyledSortFilter = styled.div`
   }
 `;
 
-const SortFilter: FC<SortFilterProps> = ({ options }) => (
+const SortFilter: FC<SortFilterProps> = ({ options, onSort }) => (
   <StyledSortFilter>
     <span>Sort By</span>
     <ReactSelect options={ options }
-                 defaultValue={ options[0] } />
+                 defaultValue={ options[0] }
+                 onChange={onSort} />
   </StyledSortFilter>
 );
 

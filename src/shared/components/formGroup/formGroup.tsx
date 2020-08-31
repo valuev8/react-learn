@@ -46,19 +46,23 @@ const StyledFieldset = styled.fieldset`
 type FormGroupProps = {
   label: string;
   id: string;
+  value?: any;
   placeholder?: string;
-  onChange?: () => any;
+  readOnly?: boolean;
+  onChange?: (e: any) => any;
 }
 
 // TODO: add input type prop (select, datepicker, textarea, input);
-const FormGroup = ({ label, id, placeholder, onChange }: FormGroupProps) => (
+const FormGroup = ({ label, id, placeholder, value, readOnly, onChange }: FormGroupProps) => (
   <StyledFieldset>
     <label htmlFor={id}> { label } </label>
     <StyledInput
       id={id}
       placeholder={placeholder}
+      value={value}
+      readOnly={readOnly}
       type="text"
-      onChange={() => onChange}/>
+      onChange={onChange}/>
   </StyledFieldset>
 );
 

@@ -3,6 +3,7 @@ import GenreFilter from '../../components/filter/genreFilter/genreFilter';
 import styled from 'styled-components';
 import SortFilter from '../../components/filter/sortFilter/sortFilter';
 import { variables } from '@styles/variables.styles';
+import { SelectOption } from '../../shared/models/select-option.type';
 
 const genres = [
   {
@@ -10,8 +11,8 @@ const genres = [
     genreName: 'all',
   },
   {
-    genreId: 'doc',
-    genreName: 'documentary',
+    genreId: 'adventure',
+    genreName: 'adventure',
   },
   {
     genreId: 'comedy',
@@ -28,9 +29,9 @@ const genres = [
 ]
 
 const options = [
-  { value: 'date', label: 'Release Date' },
-  { value: 'rating', label: 'Rating' },
-  { value: 'name', label: 'Movie Title' },
+  { value: 'release_date', label: 'Release Date' },
+  { value: 'revenue', label: 'Revenue' },
+  { value: 'title', label: 'Movie Title' },
 ]
 
 const StyledWrapper = styled.div`
@@ -44,10 +45,15 @@ const StyledWrapper = styled.div`
          inset 0 0 7px 0 ${variables.colorPrimary};
 `;
 
-const FilterBarContainer: FC = () => (
+type FilterBarProps = {
+  onSort: (e: SelectOption) => void,
+  onFilter: (e: string) => void,
+}
+
+const FilterBarContainer: FC<FilterBarProps> = ({ onSort, onFilter }: FilterBarProps) => (
   <StyledWrapper>
-    <GenreFilter genres={ genres } />
-    <SortFilter options={ options } />
+    <GenreFilter genres={ genres } onFilter={onFilter}/>
+    <SortFilter options={ options } onSort={onSort} />
   </StyledWrapper>
 );
 
