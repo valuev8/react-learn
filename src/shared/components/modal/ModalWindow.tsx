@@ -1,12 +1,14 @@
-import React, { Component, ReactNode } from 'react';
+import React, { FC, ReactNode } from 'react';
 import styled from 'styled-components';
 import { variables } from '@styles/variables.styles';
 import ReactDOM from 'react-dom';
 import Button from '../button/Button';
+import { ClickAwayListener } from '@material-ui/core';
 
 type ModalProps = {
-  onCloseRequest: () => void;
   title: string;
+  isShowing: boolean;
+  hide: () => void;
   children: ReactNode;
 };
 
@@ -63,73 +65,24 @@ const StyledModal = styled.div`
     }
 `
 
-class ModalWindow extends Component<ModalProps> {
-  modal: HTMLElement;
-
-  constructor(props: ModalProps) {
-    super(props);
-
-    this.handleKeyUp = this.handleKeyUp.bind(this);
-    this.handleOutsideClick = this.handleOutsideClick.bind(this);
-  }
-
-  componentDidMount() {
-    window.addEventListener("keyup", this.handleKeyUp, false);
-    document.addEventListener("click", this.handleOutsideClick, false);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("keyup", this.handleKeyUp, false);
-    document.removeEventListener("click", this.handleOutsideClick, false);
-  }
-
-  handleKeyUp(e: KeyboardEvent) {
-    const { onCloseRequest } = this.props;
-    const keys: { [key: string]: any} = {
-      '27': () => {
-        e.preventDefault();
-        onCloseRequest();
-        window.removeEventListener("keyup", this.handleKeyUp, false);
-      }
-    };
-
-    if (keys[e.code]) {
-      keys[e.code]();
-    }
-  }
-
-  handleOutsideClick(e: Event) {
-    const { onCloseRequest } = this.props;
-
-    if (this.modal) {
-      if (!this.modal.contains(e.target as Node)) {
-        onCloseRequest();
-        document.removeEventListener("click", this.handleOutsideClick, false);
-      }
-    }
-  }
-
-  render() {
-    const { onCloseRequest, children, title } = this.props;
-
-    return ReactDOM.createPortal(
-      <StyledModal>
-        <div className={'modal'} ref={node => (this.modal = node)}>
-          <button className='modal-close-btn' onClick={onCloseRequest}> X </button>
+const ModalWindow: FC<ModalProps> = ({ isShowing, hide, title, children }) => {
+  return isShowing ? ReactDOM.createPortal(
+    <StyledModal>
+      <ClickAwayListener onClickAway={hide}>
+        <div className='modal'>
+          <button className='modal-close-btn' onClick={ hide }> X</button>
           <div className='modal-header'> { title }</div>
-          <div
-            className={'modalContent'}
-            onClick={(e) => e.stopPropagation()}>
-              { children }
+          <div className={ 'modalContent' }>
+            { children }
           </div>
           <div className="modal-footer">
-            <Button onClick={onCloseRequest}> Close </Button>
-            <Button onClick={onCloseRequest} theme='success'> Confirm </Button>
+            <Button onClick={ hide }> Close </Button>
+            <Button onClick={ hide } theme='success'> Confirm </Button>
           </div>
         </div>
-      </StyledModal>, document.body
-    );
-  }
+      </ClickAwayListener>
+    </StyledModal>, document.body
+    ) : null;
 }
 
 export default ModalWindow;

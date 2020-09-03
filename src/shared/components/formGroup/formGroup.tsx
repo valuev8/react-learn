@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { variables } from '@styles/variables.styles';
 
@@ -49,21 +49,30 @@ type FormGroupProps = {
   value?: any;
   placeholder?: string;
   readOnly?: boolean;
-  onChange?: (e: any) => any;
+  onChange?: (value: { id: string, value: string }) => any;
 }
 
 // TODO: add input type prop (select, datepicker, textarea, input);
-const FormGroup = ({ label, id, placeholder, value, readOnly, onChange }: FormGroupProps) => (
-  <StyledFieldset>
-    <label htmlFor={id}> { label } </label>
-    <StyledInput
-      id={id}
-      placeholder={placeholder}
-      value={value}
-      readOnly={readOnly}
-      type="text"
-      onChange={onChange}/>
-  </StyledFieldset>
-);
+const FormGroup = ({ label, id, placeholder, value, readOnly, onChange }: FormGroupProps) => {
+  const [inputValue, setValue] = useState(value);
+
+  function handleValueChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setValue(event.target.value);
+    onChange( { id, value: inputValue })
+  }
+
+  return (
+    <StyledFieldset>
+      <label htmlFor={ id }> { label } </label>
+      <StyledInput
+        id={ id }
+        placeholder={ placeholder }
+        value={ inputValue }
+        readOnly={ readOnly }
+        type="text"
+        onChange={handleValueChange}/>
+    </StyledFieldset>
+  );
+}
 
 export default FormGroup;

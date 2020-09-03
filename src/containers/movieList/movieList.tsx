@@ -1,7 +1,7 @@
 import React from 'react';
-import MovieCard from '../../components/movieCard/movieCard';
 import styled from 'styled-components';
 import { Movie } from '../../shared/models/movie.type';
+import MovieCardWithControls from '../../components/movieCard/MovieCardWithControls';
 
 const StyledMovieList = styled.div`
   display: grid;
@@ -20,12 +20,18 @@ const StyledMovieList = styled.div`
 
 type MovieListProps = {
   movies: Movie[];
+  onMovieClick: (movie: Movie) => any;
 }
 
-const MovieList = ({ movies }: MovieListProps ) => (
+const MovieList = ({ movies, onMovieClick }: MovieListProps ) => (
   <StyledMovieList>
     { movies.length
-      ? movies.map((movie) => <MovieCard movie={movie} key={movie.id} />)
+      ? movies.map((movie) =>
+          <MovieCardWithControls
+            movie={movie}
+            key={movie.id}
+            onMovieClick={onMovieClick} />
+        )
       : 'Movies not found'
     }
   </StyledMovieList>

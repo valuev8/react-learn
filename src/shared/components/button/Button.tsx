@@ -22,28 +22,6 @@ const StyledButton = styled.button<ButtonProps>`
   position: relative;
   transition: all .2s;
   ${props => getButtonColor(props.theme)}
-  
-  &::before {
-    width: 20px;
-    height: 1px;
-    display: block;
-    position: absolute;
-    top: -1px;
-    left: 50px;
-    box-shadow: 0 0 10px #fff;
-    z-index: -1;
-  }
-  
-  &::after {
-    width: 20px;
-    height: 1px;
-    display: block;
-    position: absolute;
-    bottom: -1px;
-    left: 10px;
-    box-shadow: 0 0 10px #fff;
-    z-index: -1;
-  }
 `
 
 const getButtonColor = (theme: string) => {

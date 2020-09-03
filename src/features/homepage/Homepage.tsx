@@ -3,55 +3,38 @@ import HeaderContainer from '../../containers/header/HeaderContainer';
 import FilterBarContainer from '../../containers/filterBar/filterBarContainer';
 import MovieList from '../../containers/movieList/movieList';
 import Footer from '../../shared/components/footer/footer';
-import { Component } from 'react';
-import { Movie } from '../../shared/models/movie.type';
+import { useState } from 'react';
 import { Movies } from '../../data/movies';
 import { SelectOption } from '../../shared/models/select-option.type';
+import { Movie } from '../../shared/models/movie.type';
 
-type HomepageState = {
-  sortBy: string,
-  genreFilter: string;
-  movies: Movie[],
-  filteredMovies: Movie[],
-}
+export const Homepage = () => {
+  const [movies] = useState(Movies);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [filteredMovies, setFilteredMovies] = useState(movies);
 
-export class Homepage extends Component<{}, HomepageState> {
-  constructor(props: {}) {
-    super(props)
-    this.state = {
-      movies: Movies,
-      filteredMovies: Movies,
-      sortBy: null,
-      genreFilter: null,
+  const handleSort = ({ value }: SelectOption) => {
+    setFilteredMovies([...movies].sort((a, b) => a[value] > b[value] ? 1 : -1));
+  }
+
+  const handleFilter = (genreId: string) => {
+    if (genreId === 'all') {
+      setFilteredMovies([...movies]);
+      return;
     }
-  }
 
-  handleSort = ({ value }: SelectOption) => {
-    this.setState((state) => {
-      // @ts-ignore
-      return { ...state, filteredMovies: [...state.movies].sort((a, b) => a[value] > b[value] ? 1 : -1)}
-    });
-  }
-
-  handleFilter = (genreId: string) => {
-    this.setState((state) => {
-      if (genreId === 'all') {
-        return { ...state, filteredMovies: [...state.movies]};
-      }
-
-      return { ...state, filteredMovies: [...state.movies]
-          .filter((movie) => movie.genres.some((genre) => genre.toUpperCase() === genreId.toUpperCase()))}
-    });
+    setFilteredMovies([...movies]
+          .filter((movie) => movie.genres.some((genre) => genre.toUpperCase() === genreId.toUpperCase())))
   };
 
-  render() {
-   return (
-     <React.Fragment>
-       <HeaderContainer />
-       <FilterBarContainer onSort={this.handleSort} onFilter={this.handleFilter}/>
-       <MovieList movies={this.state.filteredMovies}/>
-       <Footer />
-     </React.Fragment>
-   )
-  }
+  const onMovieSelect = (movie: Movie) => setSelectedMovie(movie);
+
+  return (
+   <React.Fragment>
+     <HeaderContainer movie={selectedMovie} onMovieReset={() => onMovieSelect(null)}/>
+     <FilterBarContainer onSort={handleSort} onFilter={handleFilter}/>
+     <MovieList movies={filteredMovies} onMovieClick={onMovieSelect}/>
+     <Footer />
+   </React.Fragment>
+  )
 }

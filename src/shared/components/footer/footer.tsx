@@ -6,6 +6,7 @@ import { variables } from '@styles/variables.styles';
 const StyledFooter = styled.div`
   height: 40px;
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
   border-top: 1px solid ${ variables.colorSecondary };

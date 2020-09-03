@@ -34,11 +34,12 @@ const StyledGenresList = styled.ul`
 const GenreFilter: FC<GenreFilterProps> = ({ genres, onFilter }: GenreFilterProps) => (
     <StyledGenresList>
       {
-        genres.map((genre: Genre) => <li
-          key={genre.genreId}
-          onClick={() => onFilter(genre.genreId)}>
-          { genre.genreName }
-        </li>
+        genres.map((genre: Genre) =>
+          <li
+            key={genre.genreId}
+            onClick={() => onFilter(genre.genreId)}>
+            { genre.genreName }
+          </li>
         )
       }
     </StyledGenresList>

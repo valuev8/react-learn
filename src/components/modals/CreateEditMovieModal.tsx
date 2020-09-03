@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import FormGroup from '../../shared/components/formGroup/formGroup';
 import { Movie } from '../../shared/models/movie.type';
 
@@ -15,41 +15,53 @@ type ModalProps = {
   type?: string;
 }
 
-// TODO: 1) rework modals
-const CreateEditMovieModal = ({ data, type }: ModalProps) => {
-  let formData: formData[] = [
-    { label: 'title', id: 'movieTitle', placeholder: 'Title' },
-    { label: 'release date', id: 'release_date', placeholder: 'Select Date'},
-    { label: 'movie url', id: 'poster_path', placeholder: 'Movie URL here'},
-    { label: 'genre', id: 'genres' },
-    { label: 'overview', id: 'overview', placeholder: 'Overview here'},
-    { label: 'runtime', id: 'runtime', placeholder: 'Runtime here'},
-  ];
+const formData: formData[] = [
+  { label: 'title', id: 'title', placeholder: 'Title' },
+  { label: 'release date', id: 'release_date', placeholder: 'Select Date'},
+  { label: 'movie url', id: 'poster_path', placeholder: 'Movie URL here'},
+  { label: 'genre', id: 'genres' },
+  { label: 'overview', id: 'overview', placeholder: 'Overview here'},
+  { label: 'runtime', id: 'runtime', placeholder: 'Runtime here'},
+];
 
-  if (type === 'edit') {
-    const movieIdItem = {
-      label: 'Movie Id',
-      id: 'id',
-      readOnly: true,
-      value: data.id
+const defaultMovie: Partial<Movie> = {
+  title: '',
+  release_date: '',
+  poster_path: '',
+  overview: '',
+  genres: [],
+  runtime: '' as any,
+}
+
+const CreateEditMovieModal: FC<ModalProps> = (props) => {
+  const [ movie, setMovie ] = useState(props.data || defaultMovie);
+  const [ formFieldConfig, setFormFieldConfig ] = useState(formData);
+
+  const setFormConfig = () => {
+    if (props.type === 'edit') {
+      const movieIdItem = {
+        label: 'Movie Id',
+        id: 'id',
+        readOnly: true,
+      }
+
+      setFormFieldConfig([ movieIdItem, ...formFieldConfig]);
     }
+  };
 
-    const movieKeysObject: { [ key: string ]: any } = { ...data };
+  const handleChange = (e: { id: string, value: string | number }) => {
+    setMovie({ ...movie, [e.id]: e.value })
+  };
 
-    const editFormData = formData.map((item: formData) => {
-      return {...item, value: movieKeysObject[item.id]};
-    })
+  useEffect(setFormConfig, [props.type]);
 
-    formData = [ movieIdItem, ...editFormData]
-  }
-
-  const handleChange = (e: any) => console.log(e.target, e.target.value, e.target.name);
   return (
-    <form>
-      { formData.map(({ label, id , placeholder, value, readOnly}) => {
+      <form>
+      {
+        formFieldConfig.map(({ label, id , placeholder, readOnly = false}) => {
           return <FormGroup
             key={id}
-            value={value}
+            value={movie[id]}
             label={label}
             id={id}
             readOnly={readOnly}
@@ -57,7 +69,8 @@ const CreateEditMovieModal = ({ data, type }: ModalProps) => {
             onChange={handleChange}/>
         })
       }
-    </form>)
-};
+    </form>
+  )
+}
 
 export default CreateEditMovieModal;

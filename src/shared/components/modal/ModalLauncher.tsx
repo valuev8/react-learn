@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { FC } from 'react';
 import ModalWindow from './ModalWindow';
 import Button from '../button/Button';
 import { createGlobalStyle } from 'styled-components';
+import useModal from '../../hooks/useModal';
 
 type ModalLauncherProps = {
   theme?: string;
@@ -17,42 +18,25 @@ const GlobalStyle = createGlobalStyle`
     : null
 )}`
 
-class ModalLauncher extends Component<ModalLauncherProps, { showModal: boolean }> {
-  constructor(props: ModalLauncherProps) {
-    super(props);
-    this.state = {
-      showModal: false
-    };
-  }
+const ModalLauncher: FC<ModalLauncherProps> = (props) => {
+  const {theme, width, height, label, modalHeader, children} = props;
+  const {isShowing, toggle} = useModal();
 
-  handleToggleModal() {
-    this.setState({ showModal: !this.state.showModal });
-  }
-
-  render() {
-    const { children, label, height, width, theme, modalHeader } = this.props;
-    const { showModal } = this.state;
-
-    return (
-      <React.Fragment>
-        <GlobalStyle modalOpen={showModal} />
-        <Button
-          theme={theme}
-          width={width}
-          height={height}
-          onClick={() => this.handleToggleModal()}
-        >
-          { label }
-        </Button>
-
-        {showModal && (
-          <ModalWindow onCloseRequest={() => this.handleToggleModal()} title={modalHeader}>
-            {children}
-          </ModalWindow>
-        )}
-      </React.Fragment>
-    );
-  }
+  return (
+    <React.Fragment>
+      <GlobalStyle modalOpen={isShowing} />
+      <Button
+        theme={theme}
+        width={width}
+        height={height}
+        onClick={toggle}>
+        { label }
+      </Button>
+      <ModalWindow isShowing={isShowing} hide={toggle} title={modalHeader}>
+        {children}
+      </ModalWindow>
+    </React.Fragment>
+  );
 }
 
 export default ModalLauncher;
