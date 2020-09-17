@@ -4,6 +4,8 @@ import { variables } from '@styles/variables.styles';
 import SearchBarHeader from './components/SearchBarHeader';
 import { Movie } from '../../shared/models/movie.type';
 import DetailsHeader from './components/DetailsHeader';
+import { connect, useDispatch } from 'react-redux';
+import { createMovieThunk } from '../../store/movies/action';
 
 const StyledHeaderWrapper = styled.div`
   padding: 20px;
@@ -34,16 +36,25 @@ type HeaderContainerProps = {
   movie?: Movie,
   onMovieReset: () => void;
 }
-const HeaderContainer: FC<HeaderContainerProps>= ({ movie, onMovieReset }) => (
+
+const HeaderContainer: FC<HeaderContainerProps>= ({ movie, onMovieReset }) => {
+  const dispatch = useDispatch();
+
+  const createMovie = (movie: Partial<Movie>) => {
+    dispatch(createMovieThunk(movie));
+  }
+
+  return (
     <React.Fragment>
       <StyledHeaderWrapper>
         {
           movie
             ? <DetailsHeader movie={movie} onSearchClick={onMovieReset}/>
-            : <SearchBarHeader />
+            : <SearchBarHeader onConfirm={createMovie}/>
         }
       </StyledHeaderWrapper>
     </React.Fragment>
   );
+}
 
-export default HeaderContainer;
+export default connect()(HeaderContainer);

@@ -6,10 +6,10 @@ import MovieCardWithControls from '../../components/movieCard/MovieCardWithContr
 const StyledMovieList = styled.div`
   display: grid;
   grid-template-columns: 
-   minmax(250px, auto)
-   minmax(250px, auto)
-   minmax(250px, auto)
-   minmax(250px, auto);
+   minmax(250px, 600px)
+   minmax(250px, 600px)
+   minmax(250px, 600px)
+   minmax(250px, 600px);
   grid-gap: 30px;
   padding: 30px;
   flex-grow: 1;

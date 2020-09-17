@@ -3,28 +3,33 @@ import HeaderContainer from '../../containers/header/HeaderContainer';
 import FilterBarContainer from '../../containers/filterBar/filterBarContainer';
 import MovieList from '../../containers/movieList/movieList';
 import Footer from '../../shared/components/footer/footer';
-import { useState } from 'react';
-import { Movies } from '../../data/movies';
+import { FC, useEffect, useState } from 'react';
 import { SelectOption } from '../../shared/models/select-option.type';
 import { Movie } from '../../shared/models/movie.type';
+import { connect, useDispatch } from 'react-redux';
+import { applyFilter, applySort, getMoviesThunk } from '../../store/movies/action';
+import { RootState } from '../../store/rootReducer';
 
-export const Homepage = () => {
-  const [movies] = useState(Movies);
+type HomepageProps = {
+  movies: Movie[],
+  filteredMovies: Movie[],
+  getMoviesThunk: () => void;
+}
+
+const Homepage: FC<HomepageProps> = ({ filteredMovies = [], getMoviesThunk }: HomepageProps) => {
+  const dispatch = useDispatch();
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const [filteredMovies, setFilteredMovies] = useState(movies);
+
+  useEffect(() => {
+    getMoviesThunk();
+  }, [])
 
   const handleSort = ({ value }: SelectOption) => {
-    setFilteredMovies([...movies].sort((a, b) => a[value] > b[value] ? 1 : -1));
+    dispatch(applySort(value));
   }
 
   const handleFilter = (genreId: string) => {
-    if (genreId === 'all') {
-      setFilteredMovies([...movies]);
-      return;
-    }
-
-    setFilteredMovies([...movies]
-          .filter((movie) => movie.genres.some((genre) => genre.toUpperCase() === genreId.toUpperCase())))
+    dispatch(applyFilter(genreId));
   };
 
   const onMovieSelect = (movie: Movie) => setSelectedMovie(movie);
@@ -38,3 +43,13 @@ export const Homepage = () => {
    </React.Fragment>
   )
 }
+
+const mapStateToProps = ({ moviesReducer }: RootState, _: {}) => ({
+  movies: moviesReducer.movies,
+  filteredMovies: moviesReducer.filteredMovies,
+});
+
+export default connect(
+  mapStateToProps,
+  { getMoviesThunk },
+)(Homepage);

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Logo from '../../../shared/components/logo/Logo';
-import ModalLauncher from '../../../shared/components/modal/ModalLauncher';
 import CreateEditMovieModal from '../../../components/modals/CreateEditMovieModal';
 import SearchBar from '../../../shared/components/searchBar/searchBar';
 import styled from 'styled-components';
+import { Movie } from '../../../shared/models/movie.type';
 
 const StyledTopSection = styled.div`
   width: 100%;
@@ -18,14 +18,15 @@ const StyledBottomSection = styled(StyledTopSection)`
   align-items: center;
   flex-grow: 1;
 `
+type SearchBarHeaderProps = {
+  onConfirm: (movie: Partial<Movie>) => void;
+}
 
-const SearchBarHeader = () => (
+const SearchBarHeader: FC<SearchBarHeaderProps> = ({ onConfirm }) => (
   <React.Fragment>
     <StyledTopSection>
       <Logo />
-      <ModalLauncher label='+ Add Movie' width='150' modalHeader='Create Movie'>
-        <CreateEditMovieModal />
-      </ModalLauncher>
+      <CreateEditMovieModal type='create' onConfirm={ onConfirm } />
     </StyledTopSection>
     <StyledBottomSection>
       <SearchBar/>

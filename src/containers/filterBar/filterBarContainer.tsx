@@ -30,6 +30,7 @@ const genres = [
 
 const options = [
   { value: 'release_date', label: 'Release Date' },
+  { value: 'vote_average', label: 'Rating' },
   { value: 'revenue', label: 'Revenue' },
   { value: 'title', label: 'Movie Title' },
 ]

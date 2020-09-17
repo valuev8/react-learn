@@ -3,10 +3,12 @@ import { Movie } from '../../shared/models/movie.type';
 import MovieCard from './movieCard';
 import styled from 'styled-components';
 import DotsButton from '../../shared/components/dotsButton/dotsButton';
-import ModalLauncher from '../../shared/components/modal/ModalLauncher';
 import CreateEditMovieModal from '../modals/CreateEditMovieModal';
 import { Menu, MenuItem } from '@material-ui/core';
 import { variables } from '@styles/variables.styles';
+import DeleteMovieModal from '../modals/DeleteMovieModal';
+import { connect, useDispatch } from 'react-redux';
+import { deleteMovieThunk, editMovieThunk } from '../../store/movies/action';
 
 
 const StyledMenu = styled(Menu)`
@@ -45,6 +47,7 @@ type MovieCardWithControlsProps = {
 
 const MovieCardWithControls: FC<MovieCardWithControlsProps> = ({ movie, onMovieClick }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const dispatch = useDispatch();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -52,6 +55,14 @@ const MovieCardWithControls: FC<MovieCardWithControlsProps> = ({ movie, onMovieC
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const deleteMovie = () => {
+    dispatch(deleteMovieThunk(movie.id));
+  };
+
+  const updateMovie = (movie: Movie) => {
+    dispatch(editMovieThunk(movie));
   };
 
   return (
@@ -68,14 +79,10 @@ const MovieCardWithControls: FC<MovieCardWithControlsProps> = ({ movie, onMovieC
         }}
       >
         <MenuItem onClick={handleClose}>
-          <ModalLauncher width='100' label='Edit' modalHeader='Edit Movie'>
-            <CreateEditMovieModal data={movie} type='edit' />
-          </ModalLauncher>
+          <CreateEditMovieModal data={movie} type='edit' onConfirm={updateMovie}/>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <ModalLauncher width='100' label='Delete' modalHeader='Delete Movie'>
-            Are you sure you want to delete this movie?
-          </ModalLauncher>
+          <DeleteMovieModal onConfirm={deleteMovie}/>
         </MenuItem>
       </StyledMenu>
       <MovieCard movie={movie} onMovieClick={onMovieClick}/>
@@ -83,4 +90,4 @@ const MovieCardWithControls: FC<MovieCardWithControlsProps> = ({ movie, onMovieC
   )
 };
 
-export default MovieCardWithControls;
+export default connect()(MovieCardWithControls);

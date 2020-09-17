@@ -87,7 +87,7 @@ const DetailsHeader: FC<DetailsHeaderProps> = ({ movie, onSearchClick }) => (
       <StyledHeaderContent>
         <h1>
           { movie.title }
-          <RatingBadge size={20} rating={movie.vote_average} />
+          <RatingBadge size={20} rating={movie.vote_average ?? 0} />
         </h1>
         <h2>{ movie.tagline }</h2>
         <div className="movie-info">

@@ -8,7 +8,8 @@ type ReactSelectProps = {
   options: SelectOption[];
   defaultValue?: SelectOption;
   placeholder?: string;
-  onChange: (e: SelectOption) => void,
+  multi?: boolean;
+  onChange: (e: SelectOption | SelectOption[]) => void,
 }
 
 const StyledReactSelect = styled(Select)`
@@ -28,6 +29,20 @@ const StyledReactSelect = styled(Select)`
          0 0 7px 0 ${variables.colorSecondary},
          inset 0 0 7px 0 ${variables.colorSecondary};
       }
+    }
+    
+    &__multi-value {
+      background: transparent;
+      border: 1px solid ${variables.colorPrimary};
+    }
+    
+    &__multi-value__label {
+      color: ${variables.colorPrimary};
+    }
+    
+    &__multi-value__remove:hover {
+      color: ${variables.colorSecondary};
+      background: transparent;
     }
     
     &__indicator {
@@ -72,11 +87,12 @@ const StyledReactSelect = styled(Select)`
   }
 `;
 
-const ReactSelect = ({ options, placeholder, defaultValue, onChange }: ReactSelectProps) => (
+const ReactSelect = ({ options, placeholder, defaultValue, onChange, multi }: ReactSelectProps) => (
   <StyledReactSelect options={ options }
                      defaultValue={ defaultValue || options[0] }
                      placeholder={ placeholder }
-                     onChange={onChange}
+                     onChange={ onChange }
+                     isMulti={ multi }
                      classNamePrefix="react-select"/>
 );
 

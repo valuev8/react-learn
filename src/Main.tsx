@@ -2,8 +2,8 @@ import * as React from 'react';
 import reset from 'styled-reset'
 import { createGlobalStyle } from 'styled-components';
 import { variables } from '@styles/variables.styles';
-import { Homepage } from './features/homepage/Homepage';
 import { ErrorBoundary } from './shared/error-handlers/errorBoundary/errorBoundary';
+import Homepage from './features/homepage/Homepage';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
