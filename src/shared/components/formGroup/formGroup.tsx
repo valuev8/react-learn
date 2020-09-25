@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { variables } from '@styles/variables.styles';
 import ReactSelect from '../select/reactSelect';
 import { SelectOption } from '../../models/select-option.type';
+import { useField } from 'formik';
 
 // TODO: create shared input component
 const StyledInput = styled.input`
@@ -16,6 +17,16 @@ const StyledInput = styled.input`
   width: 100%;
   transition: all .2s;
   position: relative;
+  
+  &.error {
+    border-color: ${ variables.colorDanger };
+    box-shadow: 0 0 10px 0 ${ variables.colorDanger };
+    
+    &:hover, &:focus {
+      border-color: ${ variables.colorDanger };
+      box-shadow: 0 0 10px 0 ${ variables.colorDanger };
+    }
+  }
   
   &:focus::placeholder {
     opacity: 0;
@@ -37,6 +48,7 @@ const StyledFieldset = styled.fieldset`
   display: flex;
   flex-direction: column;
   margin: 20px 0;
+  position: relative;
   
   .react-select__control {
     border-color: ${variables.colorPrimary} !important;
@@ -61,16 +73,21 @@ const StyledFieldset = styled.fieldset`
         top: 0;
         width: auto;
     }
+    
+  .error-msg {
+    color: ${variables.colorDanger};
+    font-size: 12px;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
 `
 
-type FormGroupProps = {
+interface FormGroupProps {
   label: string;
-  id: string;
-  value?: any;
+  name: string;
   placeholder?: string;
-  readOnly?: boolean;
   type?: 'text' | 'date' | 'select' | 'number';
-  onChange?: (value: { id: string, value: string | string[] | number }) => any;
 }
 
 const defaultOptions: SelectOption[] = [
@@ -83,56 +100,30 @@ const defaultOptions: SelectOption[] = [
   { value: 'science fiction', label: 'Science Fiction' },
 ];
 
-const FormGroup = (props: FormGroupProps) => {
-  const {
-    label,
-    id,
-    placeholder,
-    value,
-    readOnly,
-    onChange,
-    type = 'text',
-  } = props;
-  const [inputValue, setValue] = useState(value);
+const FormGroup = ({ label, type, placeholder, ...props }: FormGroupProps) => {
+  const [field, meta, helpers] = useField(props.name);
 
-  const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-    onChange( { id, value: event.target.value });
-  }
-
-  const handleSelectChange = (option: SelectOption[]) => {
-    setValue(option);
-    onChange({ id: 'genres', value: option.map((o) => o.value) });
+  const setSelectValue = (options: SelectOption[]): void => {
+    helpers.setTouched(true);
+    helpers.setValue(options?.map((option: SelectOption) => option.value) || []);
   }
 
   switch (type) {
     case ('number'):
-    case ('text'): {
+    case ('date'):
+    case ('text'):
+    default: {
       return (
         <StyledFieldset>
-          <label htmlFor={ id }> { label } </label>
+          <label htmlFor={ props.name }> { label } </label>
           <StyledInput
-            id={ id }
+            id={ props.name }
+            type={ type }
+            className={ meta.error && meta.touched ? 'error' : '' }
             placeholder={ placeholder }
-            value={ inputValue }
-            readOnly={ readOnly }
-            type={type}
-            onChange={ handleValueChange }/>
-        </StyledFieldset>
-      )
-    }
-
-    case ('date'): {
-      return (
-        <StyledFieldset>
-          <label htmlFor={ id }> { label } </label>
-          <StyledInput
-            id={ id }
-            placeholder={ placeholder }
-            value={ inputValue }
-            readOnly={ readOnly }
-            type="date"
-            onChange={ handleValueChange }/>
+            {...field}
+            {...props} />
+          { meta.error && meta.touched && <span className='error-msg'>{meta.error}</span> }
         </StyledFieldset>
       )
     }
@@ -140,12 +131,14 @@ const FormGroup = (props: FormGroupProps) => {
     case ('select'): {
       return (
         <StyledFieldset>
-          <label htmlFor={ id }> { label } </label>
+          <label htmlFor={ props.name }> { label } </label>
           <ReactSelect
             options={defaultOptions}
-            defaultValue={ inputValue.map((value: string) => ({ value, label: value })) }
-            onChange={ handleSelectChange }
+            defaultValue={ field.value.map((value: string) => ({ value, label: value })) as any }
+            onChange={ setSelectValue }
+            isValid={ !meta.error }
             multi={ true }/>
+          { meta.error && meta.touched && <span className='error-msg'>{meta.error}</span> }
         </StyledFieldset>
       )
     }

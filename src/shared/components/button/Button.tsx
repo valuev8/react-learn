@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, PropsWithChildren, ReactElement } from 'react';
 import styled from 'styled-components';
 import { variables } from '@styles/variables.styles';
 
@@ -7,6 +7,7 @@ type ButtonProps = {
   theme?: string;
   width?: string | number,
   height?: string | number,
+  type?: 'button' | 'submit' | 'reset';
   onClick?: () => void,
 }
 
@@ -75,8 +76,19 @@ const getButtonColor = (theme: string) => {
    }`
 }
 
-const Button: FC<ButtonProps> = ({ theme, width, height, children, onClick}): ReactElement => (
-  <StyledButton theme={theme} width={width} height={height} onClick={onClick}> { children } </StyledButton>
-);
+const Button: FC<ButtonProps> = (props: PropsWithChildren<ButtonProps>): ReactElement => {
+  const { theme, width, height, type = 'button', children, onClick } = props;
+
+  return (
+    <StyledButton
+      theme={theme}
+      width={width}
+      height={height}
+      type={type}
+      onClick={onClick}>
+      { children }
+    </StyledButton>
+  )
+};
 
 export default Button;

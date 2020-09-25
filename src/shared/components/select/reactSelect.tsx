@@ -9,6 +9,7 @@ type ReactSelectProps = {
   defaultValue?: SelectOption;
   placeholder?: string;
   multi?: boolean;
+  isValid?: boolean;
   onChange: (e: SelectOption | SelectOption[]) => void,
 }
 
@@ -85,14 +86,20 @@ const StyledReactSelect = styled(Select)`
       }
     }
   }
+  
+  &.error {
+    .react-select__control {
+      border-color: ${variables.colorDanger} !important;
+  }
 `;
 
-const ReactSelect = ({ options, placeholder, defaultValue, onChange, multi }: ReactSelectProps) => (
+const ReactSelect = ({ options, placeholder, defaultValue, onChange, multi, isValid = true }: ReactSelectProps) => (
   <StyledReactSelect options={ options }
-                     defaultValue={ defaultValue || options[0] }
+                     value={ defaultValue || options[0] }
                      placeholder={ placeholder }
                      onChange={ onChange }
                      isMulti={ multi }
+                     className={ !isValid ? 'error' : '' }
                      classNamePrefix="react-select"/>
 );
 

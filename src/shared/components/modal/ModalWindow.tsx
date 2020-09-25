@@ -74,7 +74,7 @@ const ModalWindow: FC<ModalProps> = ({ isShowing, hide, title, children }) => {
   return isShowing ? ReactDOM.createPortal(
     <StyledModal>
       <GlobalStyle modalOpen={isShowing} />
-      <ClickAwayListener onClickAway={hide}>
+      <ClickAwayListener onClickAway={hide} mouseEvent='onMouseDown'>
         <div className='modal'>
           <button className='modal-close-btn' onClick={ hide }> X</button>
           <div className='modal-header'> { title }</div>
