@@ -134,7 +134,7 @@ const FormGroup = ({ label, type, placeholder, ...props }: FormGroupProps) => {
           <label htmlFor={ props.name }> { label } </label>
           <ReactSelect
             options={defaultOptions}
-            defaultValue={ field.value.map((value: string) => ({ value, label: value })) as any }
+            defaultValue={ field.value.map((value: string) => ({ value, label: value })) }
             onChange={ setSelectValue }
             isValid={ !meta.error }
             multi={ true }/>
