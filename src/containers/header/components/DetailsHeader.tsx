@@ -7,6 +7,8 @@ import { variables } from '@styles/variables.styles';
 import { dataFormatter } from '../../../shared/helpers/data-formatter';
 import RatingBadge from '../../../shared/components/rating-badge/RatingBadge';
 import Button from '../../../shared/components/button/Button';
+import { Redirect, useLocation } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const StyledContainer = styled.div`
   position: relative;
@@ -69,37 +71,39 @@ const StyledHeaderContent = styled.div`
   width: 100%;
 `
 
-type DetailsHeaderProps = {
-  movie: Movie,
-  onSearchClick: () => void;
-}
+const DetailsHeader: FC = () => {
+  const { state } = useLocation<Movie>();
+  const movie: Movie = state;
 
-const DetailsHeader: FC<DetailsHeaderProps> = ({ movie, onSearchClick }) => (
-  <React.Fragment>
-    <StyledTopSection>
-      <Logo />
-      <Button width={40} onClick={onSearchClick}>
-        <SearchOutlined />
-      </Button>
-    </StyledTopSection>
-    <StyledContainer>
-      <img src={movie.poster_path} alt={movie.title}/>
-      <StyledHeaderContent>
-        <h1>
-          { movie.title }
-          <RatingBadge size={20} rating={movie.vote_average ?? 0} />
-        </h1>
-        <h2>{ movie.tagline }</h2>
-        <div className="movie-info">
-          <span> { dataFormatter(movie.release_date) } </span>
-          <span> { movie.runtime } min </span>
-        </div>
-        <p className="movie-description">
-          { movie.overview }
-        </p>
-      </StyledHeaderContent>
-    </StyledContainer>
-  </React.Fragment>
-);
+  return movie ? (
+    <React.Fragment>
+      <StyledTopSection>
+        <Logo />
+        <Link to='/movies'>
+          <Button width={40} >
+            <SearchOutlined />
+          </Button>
+        </Link>
+      </StyledTopSection>
+      <StyledContainer>
+        <img src={movie.poster_path} alt={movie.title}/>
+        <StyledHeaderContent>
+          <h1>
+            { movie.title }
+            <RatingBadge size={20} rating={movie.vote_average ?? 0} />
+          </h1>
+          <h2>{ movie.tagline }</h2>
+          <div className="movie-info">
+            <span> { dataFormatter(movie.release_date) } </span>
+            <span> { movie.runtime } min </span>
+          </div>
+          <p className="movie-description">
+            { movie.overview }
+          </p>
+        </StyledHeaderContent>
+      </StyledContainer>
+    </React.Fragment>
+  ) : <Redirect to='/' />
+};
 
 export default DetailsHeader;

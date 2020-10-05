@@ -6,6 +6,7 @@ import { Movie } from '../../shared/models/movie.type';
 import DetailsHeader from './components/DetailsHeader';
 import { connect, useDispatch } from 'react-redux';
 import { createMovieThunk } from '../../store/movies/action';
+import { Route, Switch, useRouteMatch } from 'react-router';
 
 const StyledHeaderWrapper = styled.div`
   padding: 20px;
@@ -32,13 +33,9 @@ const StyledHeaderWrapper = styled.div`
   }
 `
 
-type HeaderContainerProps = {
-  movie?: Movie,
-  onMovieReset: () => void;
-}
-
-const HeaderContainer: FC<HeaderContainerProps>= ({ movie, onMovieReset }) => {
+const HeaderContainer: FC= () => {
   const dispatch = useDispatch();
+  let { path } = useRouteMatch();
 
   const createMovie = (movie: Partial<Movie>) => {
     dispatch(createMovieThunk(movie));
@@ -47,11 +44,14 @@ const HeaderContainer: FC<HeaderContainerProps>= ({ movie, onMovieReset }) => {
   return (
     <React.Fragment>
       <StyledHeaderWrapper>
-        {
-          movie
-            ? <DetailsHeader movie={movie} onSearchClick={onMovieReset}/>
-            : <SearchBarHeader onConfirm={createMovie}/>
-        }
+        <Switch>
+          <Route exact path={path}>
+            <SearchBarHeader onConfirm={createMovie}/>
+          </Route>
+          <Route exact path={`${path}/:filmId`} >
+            <DetailsHeader />
+          </Route>
+        </Switch>
       </StyledHeaderWrapper>
     </React.Fragment>
   );

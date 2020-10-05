@@ -7,5 +7,6 @@ export const variables = {
   fontPrimary: 'Montserrat',
   fontSecondary: 'Quicksand',
   fontLogo: 'Northstar',
+  fontNeon: 'neon-tubes-2-regular',
 }
 

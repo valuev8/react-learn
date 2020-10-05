@@ -3,12 +3,13 @@ import HeaderContainer from '../../containers/header/HeaderContainer';
 import FilterBarContainer from '../../containers/filterBar/filterBarContainer';
 import MovieList from '../../containers/movieList/movieList';
 import Footer from '../../shared/components/footer/footer';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { SelectOption } from '../../shared/models/select-option.type';
 import { Movie } from '../../shared/models/movie.type';
 import { connect, useDispatch } from 'react-redux';
 import { applyFilter, applySort, getMoviesThunk } from '../../store/movies/action';
 import { RootState } from '../../store/rootReducer';
+import { useHistory } from 'react-router';
 
 type HomepageProps = {
   movies: Movie[],
@@ -18,7 +19,7 @@ type HomepageProps = {
 
 const Homepage: FC<HomepageProps> = ({ filteredMovies = [], getMoviesThunk }: HomepageProps) => {
   const dispatch = useDispatch();
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  const history = useHistory();
 
   useEffect(() => {
     getMoviesThunk();
@@ -32,11 +33,13 @@ const Homepage: FC<HomepageProps> = ({ filteredMovies = [], getMoviesThunk }: Ho
     dispatch(applyFilter(genreId));
   };
 
-  const onMovieSelect = (movie: Movie) => setSelectedMovie(movie);
+  const onMovieSelect = (movie: Movie) => {
+    history.push(`/movies/${movie.id}`, { ...movie })
+  };
 
   return (
    <React.Fragment>
-     <HeaderContainer movie={selectedMovie} onMovieReset={() => onMovieSelect(null)}/>
+     <HeaderContainer />
      <FilterBarContainer onSort={handleSort} onFilter={handleFilter}/>
      <MovieList movies={filteredMovies} onMovieClick={onMovieSelect}/>
      <Footer />

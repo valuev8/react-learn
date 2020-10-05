@@ -1,4 +1,13 @@
-import { APPLY_FILTER, APPLY_SORT, CREATE_MOVIE, DELETE_MOVIE, EDIT_MOVIE, GET_MOVIES, HANDLE_ERROR } from './types';
+import {
+  APPLY_FILTER,
+  APPLY_SEARCH,
+  APPLY_SORT,
+  CREATE_MOVIE,
+  DELETE_MOVIE,
+  EDIT_MOVIE,
+  GET_MOVIES,
+  HANDLE_ERROR
+} from './types';
 import { Movie } from '../../shared/models/movie.type';
 import { RootState } from '../rootReducer';
 
@@ -35,6 +44,11 @@ export const applyFilter = (payload: string) => ({
 
 export const applySort = (payload: string) => ({
   type: APPLY_SORT,
+  payload,
+});
+
+export const applySearch = (payload: string) => ({
+  type: APPLY_SEARCH,
   payload,
 });
 

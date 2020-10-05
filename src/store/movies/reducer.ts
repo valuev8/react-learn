@@ -1,6 +1,14 @@
 import { Movie } from '../../shared/models/movie.type';
 import { Reducer } from 'react';
-import { APPLY_FILTER, APPLY_SORT, CREATE_MOVIE, DELETE_MOVIE, EDIT_MOVIE, GET_MOVIES } from './types';
+import {
+  APPLY_FILTER,
+  APPLY_SEARCH,
+  APPLY_SORT,
+  CREATE_MOVIE,
+  DELETE_MOVIE,
+  EDIT_MOVIE,
+  GET_MOVIES
+} from './types';
 
 type Action =
   | { type: typeof GET_MOVIES, payload: Movie[] }
@@ -9,15 +17,18 @@ type Action =
   | { type: typeof DELETE_MOVIE, payload: number }
   | { type: typeof APPLY_FILTER, payload: string }
   | { type: typeof APPLY_SORT, payload: string }
+  | { type: typeof APPLY_SEARCH, payload: string }
 
 export type MoviesState = {
   movies: Movie[];
   filteredMovies: Movie[];
+  searchQuery: string;
 }
 
 const initialState: MoviesState = {
   movies: [],
   filteredMovies: [],
+  searchQuery: '',
 }
 
 const moviesReducer: Reducer<MoviesState, Action> = (
@@ -29,7 +40,7 @@ const moviesReducer: Reducer<MoviesState, Action> = (
       return {
         ...state,
         movies: action.payload,
-        filteredMovies: action.payload,
+        filteredMovies: filterByTitle(state.searchQuery, [...action.payload]),
       };
 
     case CREATE_MOVIE:
@@ -65,6 +76,13 @@ const moviesReducer: Reducer<MoviesState, Action> = (
         filteredMovies: handleSort(action.payload, state.filteredMovies),
       };
 
+    case APPLY_SEARCH:
+      return {
+        ...state,
+        searchQuery: action.payload,
+        filteredMovies: filterByTitle(action.payload, [...state.movies]),
+      };
+
     default:
       return state;
   }
@@ -91,8 +109,12 @@ const handleFilter = (genreId: string, movies: Movie[]): Movie[] => {
     .filter((movie: Movie) => movie.genres.some((genre) => genre.toUpperCase() === genreId.toUpperCase()));
 };
 
-const handleSort = (sortKey: string, movies: Movie[]) => {
+const handleSort = (sortKey: string, movies: Movie[]): Movie[] => {
   return [...movies].sort((a, b) => a[sortKey] > b[sortKey] ? 1 : -1);
-}
+};
+
+const filterByTitle = (searchQuery: string, movies: Movie[]): Movie[] => {
+  return movies.filter((movie) => movie.title.toLowerCase().includes(searchQuery.toLowerCase()))
+};
 
 export default moviesReducer;

@@ -4,12 +4,22 @@ import { createGlobalStyle } from 'styled-components';
 import { variables } from '@styles/variables.styles';
 import { ErrorBoundary } from './shared/error-handlers/errorBoundary/errorBoundary';
 import Homepage from './features/homepage/Homepage';
+import {
+  BrowserRouter, Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
+import NotFound from './features/not-found-page/NotFound';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
   @font-face {
      font-family: 'Northstar';
-     src: url('assets/fonts/NorthstarGradient-BKB3.otf');
+     src: url('/assets/fonts/NorthstarGradient-BKB3.otf');
+  }
+  @font-face {
+     font-family: 'neon-tubes-2-regular';
+     src: url('/assets/fonts/NeonTubes2.otf');
   }
   
   body {
@@ -39,7 +49,17 @@ export const Main = () => {
     <React.Fragment>
       <ErrorBoundary>
         <GlobalStyle />
-        <Homepage />
+        <BrowserRouter>
+          <Switch>
+            <Redirect exact from='/' to='/movies' />
+            <Route path='/movies'>
+              <Homepage/>
+            </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </Switch>
+        </BrowserRouter>
       </ErrorBoundary>
     </React.Fragment>
   )

@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import Button from '../button/Button';
 import styled from 'styled-components';
 import { variables } from '@styles/variables.styles';
+import { Link, useLocation } from 'react-router-dom';
+import { connect, useDispatch } from 'react-redux';
+import { applySearch } from '../../../store/movies/action';
 
 const StyledInput = styled.input`
   background: ${ variables.colorBackground };
@@ -30,11 +33,40 @@ const StyledInput = styled.input`
     opacity: .7;
   }
 `
-const SearchBar = () => (
-  <React.Fragment>
-    <StyledInput type='search' placeholder='What do you want to watch?'/>
-    <Button theme='solid' height='33' width='150'> Search </Button>
-  </React.Fragment>
-);
+const SearchBar = () => {
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const searchQueryValue = new URLSearchParams(location.search).get('title');
+  const [searchValue, setValue] = useState<string>(searchQueryValue || '');
 
-export default SearchBar;
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  }
+
+  const onSearch = () => {
+    dispatch(applySearch(searchValue));
+  }
+
+  // need to show initial search results
+  useEffect(() => {
+    onSearch();
+  }, [])
+
+  return (
+    <React.Fragment>
+      <StyledInput type='search'
+                   placeholder='What do you want to watch?'
+                   value={searchValue}
+                   onChange={handleChange}/>
+      <Link
+        to={{
+          pathname: "/movies",
+          search: searchValue ? `?title=${searchValue}` : '',
+        }}>
+        <Button theme='solid' height='33' width='150' onClick={onSearch}> Search </Button>
+      </Link>
+    </React.Fragment>
+  );
+}
+
+export default connect()(SearchBar);
