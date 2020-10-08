@@ -40,7 +40,6 @@ speed-measure-plugin.json
 # misc
 /.sass-cache
 /connect.lock
-/coverage
 /libpeerconnection.log
 npm-debug.log
 yarn-error.log
@@ -56,9 +55,6 @@ Thumbs.db
 /node_modules
 /.pnp
 .pnp.js
-
-# testing
-/coverage
 
 # production
 /build

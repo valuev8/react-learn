@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`movie actions creates CREATE_MOVIE when creating movie was successful 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "data": Array [
+        Object {
+          "title": "test",
+        },
+      ],
+    },
+    "type": "CREATE_MOVIE",
+  },
+]
+`;
+
+exports[`movie actions creates DELETE_MOVIES when deleting movies was successful 1`] = `
+Array [
+  Object {
+    "payload": 1,
+    "type": "DELETE_MOVIE",
+  },
+]
+`;
+
+exports[`movie actions creates EDIT_MOVIES when updating movies was successful 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "title": "test",
+    },
+    "type": "EDIT_MOVIE",
+  },
+]
+`;
+
+exports[`movie actions creates GET_MOVIES when getting movies was successful 1`] = `
+Array [
+  Object {
+    "payload": Array [
+      Object {
+        "title": "test",
+      },
+    ],
+    "type": "GET_MOVIES",
+  },
+]
+`;

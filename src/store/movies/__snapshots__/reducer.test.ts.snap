@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`movies reducer should handle CREATE_MOVIE 1`] = `
+Object {
+  "filteredMovies": Array [
+    Object {
+      "id": 1,
+      "title": "test",
+    },
+  ],
+  "movies": Array [
+    Object {
+      "id": 1,
+      "title": "test",
+    },
+  ],
+  "searchQuery": "",
+}
+`;
+
+exports[`movies reducer should handle DELETE_MOVIE 1`] = `
+Object {
+  "filteredMovies": Array [],
+  "movies": Array [],
+  "searchQuery": "",
+}
+`;
+
+exports[`movies reducer should handle EDIT_MOVIE 1`] = `
+Object {
+  "filteredMovies": Array [],
+  "movies": Array [
+    Object {
+      "id": 1,
+      "title": "test2",
+    },
+  ],
+  "searchQuery": "",
+}
+`;
+
+exports[`movies reducer should handle GET_MOVIES 1`] = `
+Object {
+  "filteredMovies": Array [
+    Object {
+      "id": 1,
+      "title": "test",
+    },
+  ],
+  "movies": Array [
+    Object {
+      "id": 1,
+      "title": "test",
+    },
+  ],
+  "searchQuery": "",
+}
+`;
+
+exports[`movies reducer should return the initial state 1`] = `
+Object {
+  "filteredMovies": Array [],
+  "movies": Array [],
+  "searchQuery": "",
+}
+`;
