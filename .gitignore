@@ -60,7 +60,7 @@ Thumbs.db
 /build
 
 # testing
-/build
+/coverage
 
 # misc
 .DS_Store
