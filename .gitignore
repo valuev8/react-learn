@@ -59,6 +59,9 @@ Thumbs.db
 # production
 /build
 
+# testing
+/build
+
 # misc
 .DS_Store
 .env.local
