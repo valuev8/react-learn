@@ -1,12 +1,12 @@
-import { Main } from './Main';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import Main from './Main';
+import { hydrate } from 'react-dom';
 import store from './store/configureStore';
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-ReactDOM.render(
-  <Provider store={store}>
-   <Main />
-  </Provider>,
-  document.getElementById("app")
-);
+const app = (
+  // @ts-ignore
+  <Main store={ store } Router={ BrowserRouter } />
+)
+
+hydrate(app, document.getElementById('app'));

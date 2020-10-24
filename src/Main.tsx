@@ -4,12 +4,14 @@ import { createGlobalStyle } from 'styled-components';
 import { variables } from '@styles/variables.styles';
 import { ErrorBoundary } from './shared/error-handlers/errorBoundary/errorBoundary';
 import Homepage from './features/homepage/Homepage';
+import { hot } from 'react-hot-loader';
 import {
-  BrowserRouter, Redirect,
+  Redirect,
   Route,
   Switch,
 } from 'react-router-dom';
 import NotFound from './features/not-found-page/NotFound';
+import { Provider } from 'react-redux';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -44,12 +46,12 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-export const Main = () => {
+const Main = ({ Router, location, context, store }: any) => {
   return (
-    <React.Fragment>
+    <Provider store={store}>
       <ErrorBoundary>
         <GlobalStyle />
-        <BrowserRouter>
+        <Router location={location} context={context}>
           <Switch>
             <Redirect exact from='/' to='/movies' />
             <Route path='/movies'>
@@ -59,8 +61,10 @@ export const Main = () => {
               <NotFound />
             </Route>
           </Switch>
-        </BrowserRouter>
+        </Router>
       </ErrorBoundary>
-    </React.Fragment>
+    </Provider>
   )
 }
+
+export default hot(module)(Main);

@@ -11,7 +11,10 @@ module.exports = {
     },
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
-        plugins: [new TsconfigPathsPlugin()]
+        plugins: [new TsconfigPathsPlugin()],
+        alias: {
+            'react-dom': '@hot-loader/react-dom',
+        },
     },
     module: {
         rules: [
