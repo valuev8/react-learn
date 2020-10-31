@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { variables } from '@styles/variables.styles';
 
 
-type ButtonProps = {
+export type ButtonProps = {
   theme?: string;
   width?: string | number,
   height?: string | number,

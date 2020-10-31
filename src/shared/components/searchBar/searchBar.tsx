@@ -54,10 +54,11 @@ const SearchBar = () => {
 
   return (
     <React.Fragment>
-      <StyledInput type='search'
-                   placeholder='What do you want to watch?'
-                   value={searchValue}
-                   onChange={handleChange}/>
+      <StyledInput
+        type='search'
+        placeholder='What do you want to watch?'
+        value={searchValue}
+        onChange={handleChange}/>
       <Link
         to={{
           pathname: "/movies",

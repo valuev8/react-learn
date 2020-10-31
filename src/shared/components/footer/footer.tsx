@@ -16,6 +16,7 @@ const StyledFooter = styled.div`
   }
 `
 
+// PATTERN: Stateless function
 const Footer = () => (
   <StyledFooter>
     <Logo />

@@ -26,6 +26,7 @@ type MovieListProps = {
 const MovieList = ({ movies, onMovieClick }: MovieListProps ) => (
   <StyledMovieList>
     { movies.length
+      // PATTERN: Conditional rendering
       ? movies.map((movie) =>
           <MovieCardWithControls
             movie={movie}
