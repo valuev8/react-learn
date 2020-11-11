@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import styled from 'styled-components';
-import { variables } from '@styles/variables.styles';
-import { dataFormatter } from '../../shared/helpers/data-formatter';
-import { Movie } from '../../shared/models/movie.type';
+import {variables} from '@styles/variables.styles';
+import {dataFormatter} from '../../shared/helpers/data-formatter';
+import {Movie} from '../../shared/models/movie.type';
 
 type MovieCardProps = {
   movie: Movie;
@@ -53,9 +53,9 @@ const StyledMovieCard = styled.div`
       box-shadow: 0 0 15px 1px ${ variables.colorPrimary };
     }
   }
-`
+`;
 
-const MovieCard: FC<MovieCardProps> = ({ movie, onMovieClick }) => (
+const MovieCard: FC<MovieCardProps> = ({movie, onMovieClick}) => (
   <StyledMovieCard>
     <div className="card-image" onClick={() => onMovieClick(movie)}>
       <img src={ movie.poster_path } alt="Movie Poster"/>

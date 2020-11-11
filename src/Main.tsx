@@ -1,8 +1,8 @@
 import * as React from 'react';
-import reset from 'styled-reset'
-import { createGlobalStyle } from 'styled-components';
-import { variables } from '@styles/variables.styles';
-import { ErrorBoundary } from './shared/error-handlers/errorBoundary/errorBoundary';
+import reset from 'styled-reset';
+import {createGlobalStyle} from 'styled-components';
+import {variables} from '@styles/variables.styles';
+import {ErrorBoundary} from './shared/error-handlers/errorBoundary/errorBoundary';
 import Homepage from './features/homepage/Homepage';
 import {
   BrowserRouter, Redirect,
@@ -42,7 +42,7 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
-`
+`;
 
 export const Main = () => {
   return (
@@ -62,5 +62,5 @@ export const Main = () => {
         </BrowserRouter>
       </ErrorBoundary>
     </React.Fragment>
-  )
-}
+  );
+};

@@ -1,4 +1,4 @@
-import { Movie } from '../models/movie.type';
+import {Movie} from '../models/movie.type';
 
 enum requiredFields {
   title = 'title',
@@ -19,18 +19,18 @@ export const movieFormValidator = (values: Movie) => {
 
   Object.values(requiredFields).forEach((key: string) => {
     if (!values[key] || key === 'genres' && !values[key].length) {
-      errors[key] = 'Field is required!'
+      errors[key] = 'Field is required!';
     }
   });
 
   Object.keys(numericFields).forEach((key: string) => {
     if (values[key] < 0) {
-      errors[key] = `${numericFields[key]} can't be less than 0`
+      errors[key] = `${numericFields[key]} can't be less than 0`;
     }
   });
 
   if (!values.poster_path.match(/^http.*\.(jpeg|jpg|gif|png)$/)) {
-    errors.poster_path = 'Invalid URL address'
+    errors.poster_path = 'Invalid URL address';
   }
 
   return errors;

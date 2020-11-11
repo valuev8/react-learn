@@ -1,6 +1,6 @@
-import React, { SyntheticEvent } from 'react';
+import React, {SyntheticEvent} from 'react';
 import styled from 'styled-components';
-import { variables } from '@styles/variables.styles';
+import {variables} from '@styles/variables.styles';
 
 const StyledDotsButton = styled.button`
   border-radius: 50%;
@@ -41,13 +41,13 @@ const StyledDotsButton = styled.button`
       bottom: 5px;
     }
   }
-`
+`;
 
 type DotsButtonProps = {
   onClick: (e: SyntheticEvent) => void;
 };
 
-const DotsButton = ({ onClick }: DotsButtonProps) => (
+const DotsButton = ({onClick}: DotsButtonProps) => (
   <StyledDotsButton className="dots-btn" onClick={onClick}>
     <span aria-label="dot" />
   </StyledDotsButton>

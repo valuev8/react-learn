@@ -1,5 +1,5 @@
-import { css } from 'styled-components';
-import { variables } from '@styles/variables.styles';
+import {css} from 'styled-components';
+import {variables} from '@styles/variables.styles';
 
 export const textGlowing = (color: string = variables.colorSecondary) => css`
     text-shadow:

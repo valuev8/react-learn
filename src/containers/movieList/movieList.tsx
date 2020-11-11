@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Movie } from '../../shared/models/movie.type';
+import {Movie} from '../../shared/models/movie.type';
 import MovieCardWithControls from '../../components/movieCard/MovieCardWithControls';
 
 const StyledMovieList = styled.div`
@@ -16,24 +16,24 @@ const StyledMovieList = styled.div`
   & > div {
     width: 100%;
   }
-`
+`;
 
 type MovieListProps = {
   movies: Movie[];
   onMovieClick: (movie: Movie) => any;
 }
 
-const MovieList = ({ movies, onMovieClick }: MovieListProps ) => (
+const MovieList = ({movies, onMovieClick}: MovieListProps ) => (
   <StyledMovieList>
-    { movies.length
+    { movies.length ?
       // PATTERN: Conditional rendering
-      ? movies.map((movie) =>
-          <MovieCardWithControls
-            movie={movie}
-            key={movie.id}
-            onMovieClick={onMovieClick} />
-        )
-      : 'Movies not found'
+      movies.map((movie) =>
+        <MovieCardWithControls
+          movie={movie}
+          key={movie.id}
+          onMovieClick={onMovieClick} />,
+      ) :
+      'Movies not found'
     }
   </StyledMovieList>
 );

@@ -1,5 +1,5 @@
-import { Movie } from '../../shared/models/movie.type';
-import { Reducer } from 'react';
+import {Movie} from '../../shared/models/movie.type';
+import {Reducer} from 'react';
 import {
   APPLY_FILTER,
   APPLY_SEARCH,
@@ -7,7 +7,7 @@ import {
   CREATE_MOVIE,
   DELETE_MOVIE,
   EDIT_MOVIE,
-  GET_MOVIES
+  GET_MOVIES,
 } from './types';
 
 type Action =
@@ -29,11 +29,11 @@ const initialState: MoviesState = {
   movies: [],
   filteredMovies: [],
   searchQuery: '',
-}
+};
 
 const moviesReducer: Reducer<MoviesState, Action> = (
-  state = initialState,
-  action
+    state = initialState,
+    action,
 ) => {
   switch (action.type) {
     case GET_MOVIES:
@@ -86,17 +86,17 @@ const moviesReducer: Reducer<MoviesState, Action> = (
     default:
       return state;
   }
-}
+};
 
 const deleteMovie = (movies: Movie[], movieId: number): Movie[] => {
-  return movies.filter((movie: Movie) => movie.id !== movieId)
+  return movies.filter((movie: Movie) => movie.id !== movieId);
 };
 
 const editMovie = (movies: Movie[], editedMovie: Movie): Movie[] => {
   return movies.map((movie: Movie) => {
-    return movie.id === editedMovie.id
-      ? { ...editedMovie }
-      : { ...movie }
+    return movie.id === editedMovie.id ?
+      {...editedMovie} :
+      {...movie};
   });
 };
 
@@ -106,7 +106,7 @@ const handleFilter = (genreId: string, movies: Movie[]): Movie[] => {
   }
 
   return [...movies]
-    .filter((movie: Movie) => movie.genres.some((genre) => genre.toUpperCase() === genreId.toUpperCase()));
+      .filter((movie: Movie) => movie.genres.some((genre) => genre.toUpperCase() === genreId.toUpperCase()));
 };
 
 const handleSort = (sortKey: string, movies: Movie[]): Movie[] => {
@@ -114,7 +114,7 @@ const handleSort = (sortKey: string, movies: Movie[]): Movie[] => {
 };
 
 const filterByTitle = (searchQuery: string, movies: Movie[]): Movie[] => {
-  return movies.filter((movie) => movie.title.toLowerCase().includes(searchQuery.toLowerCase()))
+  return movies.filter((movie) => movie.title.toLowerCase().includes(searchQuery.toLowerCase()));
 };
 
 export default moviesReducer;

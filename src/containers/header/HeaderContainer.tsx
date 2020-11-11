@@ -1,12 +1,12 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import styled from 'styled-components';
-import { variables } from '@styles/variables.styles';
+import {variables} from '@styles/variables.styles';
 import SearchBarHeader from './components/SearchBarHeader';
-import { Movie } from '../../shared/models/movie.type';
+import {Movie} from '../../shared/models/movie.type';
 import DetailsHeader from './components/DetailsHeader';
-import { connect, useDispatch } from 'react-redux';
-import { createMovieThunk } from '../../store/movies/action';
-import { Route, Switch, useRouteMatch } from 'react-router';
+import {connect, useDispatch} from 'react-redux';
+import {createMovieThunk} from '../../store/movies/action';
+import {Route, Switch, useRouteMatch} from 'react-router';
 
 const StyledHeaderWrapper = styled.div`
   padding: 20px;
@@ -31,15 +31,15 @@ const StyledHeaderWrapper = styled.div`
     opacity: 0.7;
     z-index: 0;
   }
-`
+`;
 
 const HeaderContainer: FC= () => {
   const dispatch = useDispatch();
-  let { path } = useRouteMatch();
+  const {path} = useRouteMatch();
 
   const createMovie = (movie: Partial<Movie>) => {
     dispatch(createMovieThunk(movie));
-  }
+  };
 
   return (
     <React.Fragment>
@@ -55,6 +55,6 @@ const HeaderContainer: FC= () => {
       </StyledHeaderWrapper>
     </React.Fragment>
   );
-}
+};
 
 export default connect()(HeaderContainer);

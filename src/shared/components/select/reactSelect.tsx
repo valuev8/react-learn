@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
-import { variables } from '@styles/variables.styles';
-import { SelectOption } from '../../models/select-option.type';
+import {variables} from '@styles/variables.styles';
+import {SelectOption} from '../../models/select-option.type';
 
 type ReactSelectProps = {
   options: SelectOption[];
@@ -93,14 +93,14 @@ const StyledReactSelect = styled(Select)`
   }
 `;
 
-const ReactSelect = ({ options, placeholder, defaultValue, onChange, multi, isValid = true }: ReactSelectProps) => (
+const ReactSelect = ({options, placeholder, defaultValue, onChange, multi, isValid = true}: ReactSelectProps) => (
   <StyledReactSelect options={ options }
-                     value={ defaultValue || options[0] }
-                     placeholder={ placeholder }
-                     onChange={ onChange }
-                     isMulti={ multi }
-                     className={ !isValid ? 'error' : '' }
-                     classNamePrefix="react-select"/>
+    value={ defaultValue || options[0] }
+    placeholder={ placeholder }
+    onChange={ onChange }
+    isMulti={ multi }
+    className={ !isValid ? 'error' : '' }
+    classNamePrefix="react-select"/>
 );
 
 export default ReactSelect;

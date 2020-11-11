@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import useModal from '../../shared/hooks/useModal';
 import Button from '../../shared/components/button/Button';
 import ModalWindow from '../../shared/components/modal/ModalWindow';
@@ -9,18 +9,18 @@ type DeleteMovieProps = {
 }
 
 // TODO: make reusable Alert modal instead of that
-const DeleteMovieModal: FC<DeleteMovieProps> = ({ onConfirm = () => {}, onClose = () => {} }) => {
+const DeleteMovieModal: FC<DeleteMovieProps> = ({onConfirm = () => {}, onClose = () => {}}) => {
   const {isShowing, toggle} = useModal();
 
   const handleClose = () => {
     onClose();
     toggle();
-  }
+  };
 
   const handleConfirm = () => {
     onConfirm();
     toggle();
-  }
+  };
 
   return (
     <React.Fragment>
@@ -38,6 +38,6 @@ const DeleteMovieModal: FC<DeleteMovieProps> = ({ onConfirm = () => {}, onClose 
       </ModalWindow>
     </React.Fragment>
   );
-}
+};
 
 export default DeleteMovieModal;

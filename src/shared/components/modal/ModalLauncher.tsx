@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import ModalWindow from './ModalWindow';
 import Button from '../button/Button';
 import useModal from '../../hooks/useModal';
@@ -29,6 +29,6 @@ const ModalLauncher: FC<ModalLauncherProps> = (props) => {
       </ModalWindow>
     </React.Fragment>
   );
-}
+};
 
 export default ModalLauncher;

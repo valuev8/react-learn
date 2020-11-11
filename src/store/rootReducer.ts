@@ -1,5 +1,5 @@
-import { combineReducers } from 'redux';
-import moviesReducer, { MoviesState } from './movies/reducer';
+import {combineReducers} from 'redux';
+import moviesReducer, {MoviesState} from './movies/reducer';
 
 export type RootState = {
   moviesReducer: MoviesState,

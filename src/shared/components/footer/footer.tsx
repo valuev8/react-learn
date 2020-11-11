@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Logo from '../logo/Logo';
-import { variables } from '@styles/variables.styles';
+import {variables} from '@styles/variables.styles';
 
 const StyledFooter = styled.div`
   height: 40px;
@@ -14,7 +14,7 @@ const StyledFooter = styled.div`
   a {
     font-size: 18px;
   }
-`
+`;
 
 // PATTERN: Stateless function
 const Footer = () => (

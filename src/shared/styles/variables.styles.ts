@@ -8,5 +8,5 @@ export const variables = {
   fontSecondary: 'Quicksand',
   fontLogo: 'Northstar',
   fontNeon: 'neon-tubes-2-regular',
-}
+};
 

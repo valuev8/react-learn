@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { variables } from '@styles/variables.styles';
+import {variables} from '@styles/variables.styles';
 
 const StyledError = styled.div`
     display: flex;
@@ -26,7 +26,7 @@ const StyledError = styled.div`
        0 0 35px 5px ${ variables.colorSecondary },
        inset 0 0 7px 0 ${ variables.colorSecondary };
     }
-`
+`;
 
 export class ErrorBoundary extends React.Component<any, { hasError: boolean }> {
   constructor(props: any) {
@@ -37,7 +37,7 @@ export class ErrorBoundary extends React.Component<any, { hasError: boolean }> {
   }
 
   static getDerivedStateFromError() {
-    return { hasError: true };
+    return {hasError: true};
   }
 
   render(): JSX.Element | React.ReactNode {
@@ -49,7 +49,7 @@ export class ErrorBoundary extends React.Component<any, { hasError: boolean }> {
             <h2>Something went wrong.</h2>
           </div>
         </StyledError>
-      )
+      );
     }
 
     return this.props.children;

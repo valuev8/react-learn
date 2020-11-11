@@ -1,14 +1,14 @@
-import React, { FC, useState } from 'react';
-import { Movie } from '../../shared/models/movie.type';
+import React, {FC, useState} from 'react';
+import {Movie} from '../../shared/models/movie.type';
 import MovieCard from './movieCard';
 import styled from 'styled-components';
 import DotsButton from '../../shared/components/dotsButton/dotsButton';
 import CreateEditMovieModal from '../modals/CreateEditMovieModal';
-import { Menu, MenuItem } from '@material-ui/core';
-import { variables } from '@styles/variables.styles';
+import {Menu, MenuItem} from '@material-ui/core';
+import {variables} from '@styles/variables.styles';
 import DeleteMovieModal from '../modals/DeleteMovieModal';
-import { connect, useDispatch } from 'react-redux';
-import { deleteMovieThunk, editMovieThunk } from '../../store/movies/action';
+import {connect, useDispatch} from 'react-redux';
+import {deleteMovieThunk, editMovieThunk} from '../../store/movies/action';
 
 
 const StyledMenu = styled(Menu)`
@@ -20,7 +20,7 @@ const StyledMenu = styled(Menu)`
   .MuiListItem-root {
     padding: 0;
   }
-`
+`;
 
 const StyledMovieCardWrapper = styled.div`
   position: relative;
@@ -38,14 +38,14 @@ const StyledMovieCardWrapper = styled.div`
       visibility: visible;
     }
   }
-`
+`;
 
 type MovieCardWithControlsProps = {
   movie: Movie,
   onMovieClick?: (movie: Movie) => any;
 }
 
-const MovieCardWithControls: FC<MovieCardWithControlsProps> = ({ movie, onMovieClick }) => {
+const MovieCardWithControls: FC<MovieCardWithControlsProps> = ({movie, onMovieClick}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const dispatch = useDispatch();
 
@@ -87,7 +87,7 @@ const MovieCardWithControls: FC<MovieCardWithControlsProps> = ({ movie, onMovieC
       </StyledMenu>
       <MovieCard movie={movie} onMovieClick={onMovieClick}/>
     </StyledMovieCardWrapper>
-  )
+  );
 };
 
 export default connect()(MovieCardWithControls);

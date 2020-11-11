@@ -6,10 +6,10 @@ import {
   DELETE_MOVIE,
   EDIT_MOVIE,
   GET_MOVIES,
-  HANDLE_ERROR
+  HANDLE_ERROR,
 } from './types';
-import { Movie } from '../../shared/models/movie.type';
-import { RootState } from '../rootReducer';
+import {Movie} from '../../shared/models/movie.type';
+import {RootState} from '../rootReducer';
 
 export const getMovies = (payload: Movie[]) => ({
   type: GET_MOVIES,
@@ -54,21 +54,21 @@ export const applySearch = (payload: string) => ({
 
 // TODO: Define types for dispatch and api / add loader
 export const getMoviesThunk = () => (dispatch: any, state: RootState, api: any) => api('movies')
-  .then((res: { data: Movie[] }) => dispatch(getMovies(res.data)))
-  .catch((err: Error) => dispatch(handleError(err)));
+    .then((res: { data: Movie[] }) => dispatch(getMovies(res.data)))
+    .catch((err: Error) => dispatch(handleError(err)));
 
 export const deleteMovieThunk = (movieId: number) => (dispatch: any, state: RootState, api: any) =>
   api(`movies/${movieId}`, 'delete')
-  .then(() => dispatch(deleteMovie(movieId)))
-  .catch((err: Error) => dispatch(handleError(err)));
+      .then(() => dispatch(deleteMovie(movieId)))
+      .catch((err: Error) => dispatch(handleError(err)));
 
 export const editMovieThunk = (movie: Movie) => (dispatch: any, state: RootState, api: any) =>
   api(`movies`, 'put', movie)
-    .then(() => dispatch(editMovie(movie)))
-    .catch((err: Error) => dispatch(handleError(err)));
+      .then(() => dispatch(editMovie(movie)))
+      .catch((err: Error) => dispatch(handleError(err)));
 
 export const createMovieThunk = (movie: Partial<Movie>) => (dispatch: any, state: RootState, api: any) =>
   api(`movies`, 'post', movie)
-    .then((createdMovie: Movie) => dispatch(createMovie(createdMovie)))
-    .catch((err: Error) => dispatch(handleError(err)));
+      .then((createdMovie: Movie) => dispatch(createMovie(createdMovie)))
+      .catch((err: Error) => dispatch(handleError(err)));
 

@@ -1,14 +1,14 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import styled from 'styled-components';
-import { Movie } from '../../../shared/models/movie.type';
+import {Movie} from '../../../shared/models/movie.type';
 import Logo from '../../../shared/components/logo/Logo';
-import { SearchOutlined } from '@material-ui/icons';
-import { variables } from '@styles/variables.styles';
-import { dataFormatter } from '../../../shared/helpers/data-formatter';
+import {SearchOutlined} from '@material-ui/icons';
+import {variables} from '@styles/variables.styles';
+import {dataFormatter} from '../../../shared/helpers/data-formatter';
 import RatingBadge from '../../../shared/components/rating-badge/RatingBadge';
 import Button from '../../../shared/components/button/Button';
-import { Redirect, useLocation } from 'react-router';
-import { Link } from 'react-router-dom';
+import {Redirect, useLocation} from 'react-router';
+import {Link} from 'react-router-dom';
 
 const StyledContainer = styled.div`
   position: relative;
@@ -50,7 +50,7 @@ const StyledContainer = styled.div`
       margin-right: 40px;
     }
   }
-`
+`;
 
 const StyledTopSection = styled.div`
   width: 100%;
@@ -65,14 +65,14 @@ const StyledTopSection = styled.div`
     align-items: center;
     justify-content: center;
   }
-`
+`;
 
 const StyledHeaderContent = styled.div`
   width: 100%;
-`
+`;
 
 const DetailsHeader: FC = () => {
-  const { state } = useLocation<Movie>();
+  const {state} = useLocation<Movie>();
   const movie: Movie = state;
 
   return movie ? (
@@ -103,7 +103,7 @@ const DetailsHeader: FC = () => {
         </StyledHeaderContent>
       </StyledContainer>
     </React.Fragment>
-  ) : <Redirect to='/' />
+  ) : <Redirect to='/' />;
 };
 
 export default DetailsHeader;

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { variables } from '@styles/variables.styles';
+import {variables} from '@styles/variables.styles';
 
 const StyledLogo = styled.a`
   font-family: ${variables.fontLogo};
@@ -12,7 +12,7 @@ const StyledLogo = styled.a`
     text-decoration: none;
     color: ${variables.colorSecondary};
   }
-`
+`;
 const Logo = () => (
   <StyledLogo href="#"> Cyber Movies </StyledLogo>
 );

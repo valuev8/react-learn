@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import styled from 'styled-components';
-import { variables } from '@styles/variables.styles';
-import { Link } from 'react-router-dom';
+import {variables} from '@styles/variables.styles';
+import {Link} from 'react-router-dom';
 import Button from '../../shared/components/button/Button';
 
 const StyledNotFoundPage = styled.div`
@@ -37,7 +37,7 @@ const StyledNotFoundPage = styled.div`
     font-size: 10vmin;
     margin-bottom: 50px;
   }
-`
+`;
 
 const NotFound: FC = () => (
   <StyledNotFoundPage>

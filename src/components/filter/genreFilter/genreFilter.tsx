@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import styled from 'styled-components';
-import { variables } from '@styles/variables.styles';
+import {variables} from '@styles/variables.styles';
 
 type Genre = {
   genreName: string;
@@ -29,20 +29,20 @@ const StyledGenresList = styled.ul`
       0 0 30px ${variables.colorSecondary}
     }
   }
-`
+`;
 
-const GenreFilter: FC<GenreFilterProps> = ({ genres, onFilter }: GenreFilterProps) => (
-    <StyledGenresList>
-      {
-        genres.map((genre: Genre) =>
-          <li
-            key={genre.genreId}
-            onClick={() => onFilter(genre.genreId)}>
-            { genre.genreName }
-          </li>
-        )
-      }
-    </StyledGenresList>
-  );
+const GenreFilter: FC<GenreFilterProps> = ({genres, onFilter}: GenreFilterProps) => (
+  <StyledGenresList>
+    {
+      genres.map((genre: Genre) =>
+        <li
+          key={genre.genreId}
+          onClick={() => onFilter(genre.genreId)}>
+          { genre.genreName }
+        </li>,
+      )
+    }
+  </StyledGenresList>
+);
 
 export default GenreFilter;

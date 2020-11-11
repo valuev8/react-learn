@@ -1,6 +1,6 @@
-import React, { FC, PropsWithChildren, ReactElement } from 'react';
+import React, {FC, PropsWithChildren, ReactElement} from 'react';
 import styled from 'styled-components';
-import { variables } from '@styles/variables.styles';
+import {variables} from '@styles/variables.styles';
 
 
 export type ButtonProps = {
@@ -16,14 +16,14 @@ const StyledButton = styled.button<ButtonProps>`
   font-family: ${variables.fontPrimary};
   border: 1px solid #fff;
   border-radius: 3px;
-  width: ${props => props.width ? `${props.width}px` : 'auto'};
-  height: ${props => props.height ? `${props.height}px` : 'auto'};
+  width: ${(props) => props.width ? `${props.width}px` : 'auto'};
+  height: ${(props) => props.height ? `${props.height}px` : 'auto'};
   padding: 6px 10px;
   background: transparent;
   position: relative;
   transition: all .2s;
-  ${props => getButtonColor(props.theme)}
-`
+  ${(props) => getButtonColor(props.theme)}
+`;
 
 const getButtonColor = (theme: string) => {
   let color: string;
@@ -43,7 +43,7 @@ const getButtonColor = (theme: string) => {
         &::before,
         &::after {
           display: none !important;
-        }`
+        }`;
     }
     case 'success': {
       color = variables.colorSuccess;
@@ -73,11 +73,11 @@ const getButtonColor = (theme: string) => {
       0 0 10px #fff,
       0 0 20px #fff,
       0 0 30px ${ color }
-   }`
-}
+   }`;
+};
 
 const Button: FC<ButtonProps> = (props: PropsWithChildren<ButtonProps>): ReactElement => {
-  const { theme, width, height, type = 'button', children, onClick } = props;
+  const {theme, width, height, type = 'button', children, onClick} = props;
 
   return (
     <StyledButton
@@ -88,7 +88,7 @@ const Button: FC<ButtonProps> = (props: PropsWithChildren<ButtonProps>): ReactEl
       onClick={onClick}>
       { children }
     </StyledButton>
-  )
+  );
 };
 
 export default Button;
